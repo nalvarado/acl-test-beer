@@ -1,4 +1,4 @@
-package com.proyect.beer.exception;
+package com.project.beer.exception;
 
 import org.springframework.http.HttpStatus;
 

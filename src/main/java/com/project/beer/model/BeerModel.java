@@ -1,4 +1,4 @@
-package com.proyect.beer.model;
+package com.project.beer.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,6 @@ import javax.persistence.Table;
 public class BeerModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", length = 19)
 	private Integer id;
 

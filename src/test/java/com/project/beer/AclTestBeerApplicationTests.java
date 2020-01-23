@@ -1,4 +1,4 @@
-package com.proyect.beer;
+package com.project.beer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

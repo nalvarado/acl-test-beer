@@ -1,4 +1,4 @@
-package com.proyect.beer.dto;
+package com.project.beer.dto;
 
 public class BeerDTO {
 

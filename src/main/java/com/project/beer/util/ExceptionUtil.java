@@ -1,4 +1,4 @@
-package com.proyect.beer.util;
+package com.project.beer.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
-import com.proyect.beer.exception.ErrorException;
-import com.proyect.beer.exception.ErrorResponse;
+import com.project.beer.exception.ErrorCreadoException;
+import com.project.beer.exception.ErrorException;
+import com.project.beer.exception.ErrorResponse;
+import com.project.beer.exception.NotFoundException;
+import com.project.beer.exception.RequestException;
 
 public class ExceptionUtil {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ExceptionUtil.class);
 
 	/*
@@ -42,10 +45,18 @@ public class ExceptionUtil {
 		logger.info("Iniciando generaException");
 		ErrorException errorEx = new ErrorException();
 
-//		if (ex instanceof ErrorException) {
-//			errorEx.setHttpStatus(HttpStatus.NOT_FOUND);
-//			errorEx.setMessage("Destino o recurso invocado no existe");
-//		} else {
+		if (ex instanceof ErrorCreadoException) {
+			errorEx.setHttpStatus(HttpStatus.CONFLICT);
+			errorEx.setMessage( ex.getMessage());
+
+		} else if (ex instanceof RequestException) {
+				errorEx.setHttpStatus(HttpStatus.BAD_REQUEST);
+				errorEx.setMessage( ex.getMessage());
+				
+		} else if (ex instanceof NotFoundException) {
+			errorEx.setHttpStatus(HttpStatus.NOT_FOUND);
+			errorEx.setMessage( ex.getMessage());
+		} else {
 			if (mensaje != null) {
 				mensaje = "[" + mensaje + " - " + ex.getMessage() + "]";
 			} else {
@@ -53,10 +64,9 @@ public class ExceptionUtil {
 			}
 			errorEx.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 			errorEx.setMessage("Error en la ejecucion del servicio - " + mensaje);
-//		}
+		}
 
 		return errorEx;
 	}
-
 
 }

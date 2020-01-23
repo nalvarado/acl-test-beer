@@ -1,4 +1,4 @@
-package com.proyect.beer;
+package com.project.beer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
