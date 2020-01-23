@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.beer.dto.BeerBoxDTO;
 import com.project.beer.dto.BeerDTO;
 import com.project.beer.dto.ResponseDTO;
 import com.project.beer.exception.ErrorCreadoException;
@@ -90,13 +91,18 @@ public class beerController {
 	@GetMapping("/beers/{beerID}/boxprice")
 	public ResponseEntity<?> getBoxPrice(@PathVariable(value = "beerID") Integer beerID ) {
 		logger.info("INICIO");
+		Integer defaultValue = 6;
 		try {
 			BeerModel lista = service.getBeer(beerID);
 			BigDecimal value = currencyService.getCurrency(lista.getCurrency());			
 			logger.info("valor Obtenido::" + value.toPlainString());
+			BeerBoxDTO box = new BeerBoxDTO();
+			BigDecimal precioOriginalDolar = new BigDecimal(lista.getPrice());
+			BigDecimal monedaCalulada = precioOriginalDolar.multiply(value);
+			box.setPriceTotal( monedaCalulada.multiply(new BigDecimal(defaultValue)));
 			
 			
-			return new ResponseEntity<>(lista, HttpStatus.OK);
+			return new ResponseEntity<>(box, HttpStatus.OK);
 			
 		} catch (NotFoundException ex) {
 			logger.error("EXCEPTION", ex);
