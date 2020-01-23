@@ -94,13 +94,12 @@ public class beerController {
 		Integer defaultValue = 6;
 		try {
 			BeerModel lista = service.getBeer(beerID);
-			BigDecimal value = currencyService.getCurrency(lista.getCurrency());			
+			BigDecimal value = currencyService.getCurrency(lista.getCurrency());
 			logger.info("valor Obtenido::" + value.toPlainString());
 			BeerBoxDTO box = new BeerBoxDTO();
 			BigDecimal precioOriginalDolar = new BigDecimal(lista.getPrice());
 			BigDecimal monedaCalulada = precioOriginalDolar.multiply(value);
 			box.setPriceTotal( monedaCalulada.multiply(new BigDecimal(defaultValue)));
-			
 			
 			return new ResponseEntity<>(box, HttpStatus.OK);
 			
